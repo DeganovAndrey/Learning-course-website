@@ -1,60 +1,31 @@
 import { useState } from "react";
-import Header from "./components/Header";
-import { ways, differences } from "./data";
-import WayToTeach from "./components/WayToTeach";
-import Button from "./components/Button/Button";
+import Header from "./components/Header/Header";
+import TeachingSection from "./components/TeachingSection";
+import DifferencesSection from "./components/DifferencesSection";
+import IntroSection from "./components/IntroSection";
+import TabsSection from "./components/TabsSection";
+import FeedbackSection from "./components/FeedbackSection";
 
 function App() {
-  const [contentType, setContentType] = useState(null);
-
-  const handleClick = (type) => {
-    setContentType(type);
-  };
+  const [tab, setTab] = useState("feedback");
 
   return (
-    <div>
+    <>
       <Header />
       <main>
-        <section>
-          <h1>Наш подход к обучению</h1>
-          <br />
-          <ul>
-            {ways.map((way) => (
-              <WayToTeach key={way.title} {...way} />
-            ))}
-          </ul>
-        </section>
-        <section>
-          <Button
-            isActive={contentType === "way"}
-            onClick={() => handleClick("way")}
-          >
-            Подход
-          </Button>
-          <Button
-            isActive={contentType === "easy"}
-            onClick={() => handleClick("easy")}
-          >
-            Доступность
-          </Button>
-          <Button
-            isActive={contentType === "program"}
-            onClick={() => handleClick("program")}
-          >
-            Концентрация
-          </Button>
+        <IntroSection />
+        <TabsSection active={tab} onChange={(current) => setTab(current)} />
 
-          {/* {contentType ? (
-            <p>{differences[contentType]}</p>
-          ) : (
-            <p>Press to button</p>
-          )} */}
+        {tab === "main" && (
+          <>
+            <TeachingSection />
+            <DifferencesSection />
+          </>
+        )}
 
-          {!contentType && <p>Press to button</p>}
-          {contentType && <p>{differences[contentType]}</p>}
-        </section>
+        {tab === "feedback" && <FeedbackSection />}
       </main>
-    </div>
+    </>
   );
 }
 
