@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import Button from "./Button/Button";
 import Modal from "./Modal/Modal";
+import useInput from "./Hooks/useInput";
 
 const EffectSection = () => {
+  const input = useInput();
   const [modal, setModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
@@ -47,11 +49,16 @@ const EffectSection = () => {
       {loading && <p>Loading...</p>}
       {!loading && (
         <>
-          <input type={text} className="control"/>
+          <input type="text" className="control" {...input} />
+          {/* <h6>{input.value}</h6> */}
           <ul>
-            {users.map((user) => (
-              <li key={user.name}>{user.name}</li>
-            ))}
+            {users
+              .filter((user) =>
+                user.name.toLowerCase().includes(input.value.toLowerCase())
+              )
+              .map((user) => (
+                <li key={user.name}>{user.name}</li>
+              ))}
           </ul>
         </>
       )}
