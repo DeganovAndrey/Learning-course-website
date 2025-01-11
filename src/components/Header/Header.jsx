@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import logo from "/logo-name.svg";
 // import './Header.css'
@@ -15,7 +15,14 @@ const HeaderContainer = styled.header`
 
 const Header = () => {
   const [now, setNow] = useState(new Date());
-  setInterval(() => setNow(new Date()), 1000);
+
+  useEffect(() => {
+    const interval = setInterval(() => setNow(new Date()), 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <HeaderContainer>
       <img src={logo} alt={logo} />
