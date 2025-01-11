@@ -5,9 +5,10 @@ import DifferencesSection from "./components/DifferencesSection";
 import IntroSection from "./components/IntroSection";
 import TabsSection from "./components/TabsSection";
 import FeedbackSection from "./components/FeedbackSection";
+import EffectSection from "./components/EffectSection";
 
 function App() {
-  const [tab, setTab] = useState("feedback");
+  const [tab, setTab] = useState("effect");
 
   return (
     <>
@@ -15,15 +16,14 @@ function App() {
       <main>
         <IntroSection />
         <TabsSection active={tab} onChange={(current) => setTab(current)} />
-
         {tab === "main" && (
           <>
             <TeachingSection />
             <DifferencesSection />
           </>
         )}
-
         {tab === "feedback" && <FeedbackSection />}
+        {tab === "effect" && <EffectSection />}
       </main>
     </>
   );
